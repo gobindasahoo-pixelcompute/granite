@@ -1,8 +1,10 @@
-class TasksController < ApplicationController
-    respond_to :html, :xml, :json
+# frozen_string_literal: true
 
-    def index
-        @tasks = Task.all
-        respond_with(@tasks)
-    end
+class TasksController < ApplicationController
+  respond_to :html, :xml, :json
+
+  def index
+    @tasks = Task.all
+    respond_with(@tasks)
+  end
 end
