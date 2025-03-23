@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   # respond_to :html, :xml, :json
-  before_action :load_task!, only: %i[show update]
+  before_action :load_task!, only: %i[show update destroy]
   def index
     # @tasks = Task.all
     # respond_with(@tasks)
@@ -23,6 +23,11 @@ class TasksController < ApplicationController
   def update
     @task.update!(task_params)
     render_notice(t("successfully_updated"))
+  end
+
+  def destroy
+    @task.destroy!
+    render_json
   end
 
   private
