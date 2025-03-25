@@ -17,7 +17,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    render_json({ task: @task, assigned_user: @task.assigned_user }) # assigned_user method is created by rails
+    # render_json({ task: @task, assigned_user: @task.assigned_user }) # assigned_user method is created by rails
   end
 
   def update
