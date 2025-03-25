@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   constraints(lambda { |req| req.format == :json }) do
     resources :tasks, except: %i[new edit], param: :slug # to use slug as default param instead of id
-    resources :users, only: %i[ index ]
+    resources :users, only: %i[ index create]
   end
 
   root "home#index"
