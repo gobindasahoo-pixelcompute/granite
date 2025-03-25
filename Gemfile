@@ -41,8 +41,8 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
+gem "bcrypt", "~> 3.1.13"
 gem "bootsnap", require: false
-
 gem "ostruct"
 gem "react-rails", "~> 2.7.1"
 gem "responders"
