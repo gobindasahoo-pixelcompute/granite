@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   constraints(lambda { |req| req.format == :json }) do
     resources :tasks, except: %i[new edit], param: :slug # to use slug as default param instead of id
     resources :users, only: %i[ index create]
-    resource :session, ony: :create
+    resource :session, ony: %i[create destroy]
   end
 
   root "home#index"
