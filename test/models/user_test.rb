@@ -1,36 +1,14 @@
 # frozen_string_literal: true
 
-def enable_test_coverage
-  require "simplecov"
-  SimpleCov.start do
-    add_filter "/test/"
-    add_group "Models", "app/models"
-    add_group "Mailers", "app/mailers"
-    add_group "Controllers", "app/controllers"
-    add_group "Uploaders", "app/uploaders"
-    add_group "Helpers", "app/helpers"
-    add_group "Jobs", "app/jobs"
-    add_group "Services", "app/services"
-  end
-end
-
-enable_test_coverage if ENV["COVERAGE"]
-
-ENV["RAILS_ENV"] ||= "test"
-require_relative "../config/environment"
-require "rails/test_help"
 require "test_helper"
 
-class TestUser < ActiveSupport::TestCase
+class UserTest < ActiveSupport::TestCase
   def setup
-    @user = User.new(
-      name: "Sam Smith",
-      email: "sam@example.com",
-      password: "welcome",
-      password_confirmation: "welcome")
+    @user = build(:user)
   end
 
-  def test_user_should_not_be_valid_and_save_without_name
+  # embed new test cases here...
+  def test_user_should_not_be_valid_and_saved_without_name
     @user.name = ""
     assert_not @user.valid?
     assert_includes @user.errors.full_messages, "Name can't be blank"
@@ -49,11 +27,12 @@ class TestUser < ActiveSupport::TestCase
     assert_includes @user.errors.full_messages, "Email can't be blank", "Email is invalid"
   end
 
-  def test_user_should_not_valid_and_saved_if_email_not_unique
+  def test_user_should_not_be_valid_and_saved_if_email_not_unique
     @user.save!
 
     test_user = @user.dup
     assert_not test_user.valid?
+
     assert_includes test_user.errors.full_messages, "Email has already been taken"
   end
 
@@ -64,7 +43,7 @@ class TestUser < ActiveSupport::TestCase
 
   def test_validation_should_accept_valid_addresses
     valid_emails = %w[user@example.com USER@example.COM US-ER@example.org
-    first.last@example.in user+one@example.ac.in]
+      first.last@example.in user+one@example.ac.in]
 
     valid_emails.each do |email|
       @user.email = email
@@ -83,7 +62,7 @@ class TestUser < ActiveSupport::TestCase
   end
 
   def test_email_should_be_saved_in_lowercase
-    uppercase_email = "SAM@EMAIL.com"
+    uppercase_email = "SAM@EMAIL.COM"
     @user.email = uppercase_email
     @user.save!
     assert_equal uppercase_email.downcase, @user.email
@@ -109,9 +88,7 @@ class TestUser < ActiveSupport::TestCase
 
   def test_users_should_have_unique_auth_token
     @user.save!
-    second_user = User.create!(
-      name: "Olive Sans", email: "olive@example.com",
-      password: "welcome", password_confirmation: "welcome")
+    second_user = create(:user)
 
     assert_not_same @user.authentication_token, second_user.authentication_token
   end
