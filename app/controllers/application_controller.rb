@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include Pundit::Authorization
   before_action :authenticate_user_using_x_auth_token
 
   protect_from_forgery
@@ -80,5 +81,9 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user
+  end
+
+  def handle_authorization_error
+    render_error(t("authorization.denied"), :forbidden)
   end
 end
