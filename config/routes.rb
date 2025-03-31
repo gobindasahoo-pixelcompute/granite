@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :tasks, except: %i[new edit], param: :slug # to use slug as default param instead of id
     resources :users, only: %i[ index create]
     resource :session, ony: %i[create destroy]
+    resources :comments, only: :create
   end
 
   root "home#index"

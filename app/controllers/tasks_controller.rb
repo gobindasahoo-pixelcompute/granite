@@ -23,6 +23,7 @@ class TasksController < ApplicationController
   def show
     # render_json({ task: @task, assigned_user: @task.assigned_user }) # assigned_user method is created by rails
     authorize @task
+    @comments = @task.comments.order("created_at DESC")
   end
 
   def update
