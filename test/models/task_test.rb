@@ -125,8 +125,8 @@ class TaskTest < ActiveSupport::TestCase
 
   def test_slug_suffix_is_maximum_slug_count_plus_one_if_two_or_more_slugs_already_exist
     title = "test-task"
-    first_task = Task.create!(title:, assigned_user: @user, task_owner: @user)
-    second_task = Task.create!(title:, assigned_user: @user, task_owner: @user)
+    Task.create!(title:, assigned_user: @user, task_owner: @user)
+    paraTask.create!(title:, assigned_user: @user, task_owner: @user)
     third_task = Task.create!(title:, assigned_user: @user, task_owner: @user)
     fourth_task = Task.create!(title:, assigned_user: @user, task_owner: @user)
 
