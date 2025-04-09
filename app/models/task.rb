@@ -16,6 +16,8 @@ class Task < ApplicationRecord
     format: { with: VALID_TITLE_REGEX }
   validates :slug, uniqueness: true
   validate :slug_not_changed
+
+  after_create :log_task_details
   before_create :set_slug
 
   private
@@ -60,5 +62,9 @@ class Task < ApplicationRecord
       if will_save_change_to_slug? && self.persisted?
         errors.add(:slug, I18n.t("task.slug.immutable"))
       end
+    end
+
+    def log_task_details
+      TaskLoggerJob.perform_async(self.id)
     end
 end
