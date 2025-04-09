@@ -3,13 +3,11 @@
 class TaskLoggerJob
   include Sidekiq::Job
 
-  queue_as :default
-
   def perform(task_id)
     task = Task.find(task_id)
-    message = "A task was created with the following title: #{task.title}"
+    message = LoggerMessageBuilderService.new(task).process!
 
-    log = Log.create! task_id: task.id, message: message
+    log = Log.create!(task_id: task.id, message:)
     puts log.message
   end
 end
