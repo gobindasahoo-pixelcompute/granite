@@ -10,6 +10,11 @@ gem "rails", "~> 7.1.5"
 gem "sidekiq", "~> 6.5.12"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
+# For periodic sidekiq jobs
+gem "sidekiq-cron"
+
+# For opening mails in development env
+gem "letter_opener", group: :development
 
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 1.4"

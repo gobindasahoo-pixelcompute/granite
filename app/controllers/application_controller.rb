@@ -26,6 +26,9 @@ class ApplicationController < ActionController::Base
       error_message = exception.message.gsub("Validation failed: ", "")
       render_error(error_message, :unprocessable_entity)
 
+    when ActiveRecord::RecordNotFound
+      render_error(t("not_found", entity: exception.model), :not_found)
+
     else
       handle_generic_exception(exception)
     end
